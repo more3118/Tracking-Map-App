@@ -5,11 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Tracking_Map_App.Pages"
     Shell.FlyoutBehavior="Disabled"
-    Title="MainView">
+    Title="Location Heat Map Tracker">
 
     <ShellContent
-        Title="MainView"
+        Title="Heat Map"
         ContentTemplate="{DataTemplate pages:LocationTrackingPage}"
-        Route="main" />
+        Route="heatmap" />
 
 </Shell>

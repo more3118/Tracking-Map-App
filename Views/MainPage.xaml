@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="HeatMapTracker.Views.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="HeatMap Tracker">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!--
+            The map (Android/iOS/MacCatalyst) or the points-list fallback
+            (Windows) is built in code-behind and inserted here. See the
+            comment in MainPage.xaml.cs for why this isn't a <maps:Map>
+            declared directly in XAML: the Map control handler isn't
+            registered on Windows at all (UseMauiMaps() throws there), so
+            building the map area in code lets one page work everywhere
+            without the XAML compiler ever needing to resolve the maps:
+            namespace on a platform that doesn't support it.
+        -->
+        <Grid Grid.Row="0" x:Name="MapAreaHost" />
+
+        <!-- Controls -->
+        <Grid Grid.Row="1"
+              Padding="16"
+              RowSpacing="8"
+              RowDefinitions="Auto,Auto">
+
+            <Label Grid.Row="0"
+                   Text="{Binding StatusText}"
+                   FontSize="14"
+                   HorizontalOptions="Center" />
+
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="*,*,*"
+                  ColumnSpacing="8">
+
+                <Button Grid.Column="0"
+                        Text="{Binding IsTracking, Converter={StaticResource TrackingButtonTextConverter}}"
+                        Command="{Binding ToggleTrackingCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Refresh"
+                        Command="{Binding LoadPointsCommand}" />
+
+                <Button Grid.Column="2"
+                        Text="Clear"
+                        BackgroundColor="IndianRed"
+                        TextColor="White"
+                        Command="{Binding ClearDataCommand}" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+</ContentPage>

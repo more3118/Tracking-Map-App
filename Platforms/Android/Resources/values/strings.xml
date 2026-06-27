@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!--
+        Get a free key at https://console.cloud.google.com/google/maps-apis
+        (enable "Maps SDK for Android"). Without a valid key the Map control
+        on Android will render a blank grey grid instead of map tiles.
+    -->
+    <string name="google_maps_key" translatable="false">YOUR_ANDROID_GOOGLE_MAPS_API_KEY_HERE</string>
+</resources>

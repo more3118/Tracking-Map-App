@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tracking Map</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        gmp-map {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script async src="https://maps.googleapis.com/maps/api/js?loading=async&key=__MAPS_API_KEY__&libraries=maps,marker"></script>
+    <script>
+        const defaultCenter = { lat: 40.7128, lng: -74.0060 };
+        const defaultZoom = 13;
+        const focusedZoom = 15;
+        let pendingLocations = [];
+        let mapReady = false;
+
+        function getMapElement() {
+            return document.getElementById('trackingMap');
+        }
+
+        function clearMarkers(mapElement) {
+            while (mapElement.firstChild) {
+                mapElement.removeChild(mapElement.firstChild);
+            }
+        }
+
+        function formatLocation(location) {
+            return `${location.latitude}, ${location.longitude}`;
+        }
+
+        function applyLocations(locations) {
+            const mapElement = getMapElement();
+            if (!mapElement) {
+                return;
+            }
+
+            clearMarkers(mapElement);
+
+            const validLocations = Array.isArray(locations)
+                ? locations.filter(location => location && Number.isFinite(location.latitude) && Number.isFinite(location.longitude))
+                : [];
+
+            if (validLocations.length === 0) {
+                mapElement.setAttribute('center', `${defaultCenter.lat}, ${defaultCenter.lng}`);
+                mapElement.setAttribute('zoom', `${defaultZoom}`);
+                return;
+            }
+
+            const lastLocation = validLocations[validLocations.length - 1];
+            mapElement.setAttribute('center', formatLocation(lastLocation));
+            mapElement.setAttribute('zoom', `${focusedZoom}`);
+
+            for (const location of validLocations) {
+                const marker = document.createElement('gmp-advanced-marker');
+                marker.setAttribute('position', formatLocation(location));
+                if (location.title) {
+                    marker.setAttribute('title', location.title);
+                }
+                mapElement.appendChild(marker);
+            }
+        }
+
+        window.renderLocations = function (locations) {
+            pendingLocations = Array.isArray(locations) ? locations : [];
+            if (!mapReady) {
+                return;
+            }
+
+            applyLocations(pendingLocations);
+        };
+
+        async function initializeMap() {
+            await customElements.whenDefined('gmp-map');
+            await customElements.whenDefined('gmp-advanced-marker');
+            mapReady = true;
+            applyLocations(pendingLocations);
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeMap);
+    </script>
+</head>
+<body>
+    <gmp-map id="trackingMap" center="40.7128, -74.0060" zoom="13" map-id="DEMO_MAP_ID"></gmp-map>
+</body>
+</html>

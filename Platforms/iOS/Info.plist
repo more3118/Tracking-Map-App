@@ -28,9 +28,11 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
- <key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app tracks your location to build your movement heat map.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to track your movements and display them on a heat map.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app tracks your location to build your movement heat map.</string>
+	<string>This app needs access to your location all the time to track your movements and display them on a heat map.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to your location to track your movements and display them on a heat map.</string>
 </dict>
 </plist>

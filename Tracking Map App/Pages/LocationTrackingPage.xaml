@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:Tracking_Map_App.PageModels"
+             x:Class="Tracking_Map_App.Pages.LocationTrackingPage"
+             x:DataType="pageModels:LocationTrackingPageModel"
+             Title="MainView">
+
+    <Grid RowDefinitions="*,Auto" ColumnDefinitions="*" Padding="0">
+
+        <WebView Grid.Row="0"
+                 x:Name="MapWebView"
+                 Navigated="MapWebView_Navigated" />
+
+        <Border Grid.Row="1"
+                StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#202020}">
+            <VerticalStackLayout Padding="12" Spacing="8">
+                <Label Text="{Binding StatusMessage}" FontSize="13" TextColor="Gray" />
+
+                <Grid ColumnDefinitions="Auto,Auto,Auto,*" ColumnSpacing="14">
+                    <Label Text="Points:" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="{Binding LocationCount}" />
+                    <Label Grid.Column="2" Text="Last:" FontAttributes="Bold" />
+                    <Label Grid.Column="3" Text="{Binding LastLocation.Timestamp, StringFormat='{0:HH:mm:ss}'}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Text="{Binding TrackButtonText}"
+                            Command="{Binding ToggleTrackingCommand}"
+                            BackgroundColor="#2E68FF"
+                            TextColor="White"
+                            FontAttributes="Bold" />
+
+                    <Button Grid.Column="1"
+                            Text="Refresh"
+                            Command="{Binding RefreshDataCommand}" />
+
+                    <Button Grid.Column="2"
+                            Text="Clear"
+                            Command="{Binding ClearDataCommand}"
+                            BackgroundColor="#D9534F"
+                            TextColor="White" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

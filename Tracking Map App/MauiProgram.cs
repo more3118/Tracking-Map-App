@@ -9,9 +9,12 @@ namespace Tracking_Map_App
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
+            var mauiBuilder = builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiMaps();
+
+            mauiBuilder
                 .ConfigureSyncfusionToolkit()
                 .ConfigureMauiHandlers(handlers =>
                 {
@@ -38,6 +41,10 @@ namespace Tracking_Map_App
             builder.Services.AddSingleton<TagRepository>();
             builder.Services.AddSingleton<SeedDataService>();
             builder.Services.AddSingleton<ModalErrorHandler>();
+            builder.Services.AddSingleton<LocationDatabaseService>();
+            builder.Services.AddSingleton<LocationTrackingService>();
+            builder.Services.AddSingleton<LocationTrackingPageModel>();
+            builder.Services.AddSingleton<LocationTrackingPage>();
             builder.Services.AddSingleton<MainPageModel>();
             builder.Services.AddSingleton<ProjectListPageModel>();
             builder.Services.AddSingleton<ManageMetaPageModel>();
